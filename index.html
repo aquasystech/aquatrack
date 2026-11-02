@@ -1957,17 +1957,22 @@
 
                 <div class="form-category-header" style="margin-top:6px;"><i class="fa-solid fa-hand-holding-dollar fa-fw" style="margin-right:6px;"></i> Bantuan dan Insentif (SPeKS / TSAPP)</div>
 
-                <div class="form-btn-item disabled-form">
+                <div class="form-btn-item" onclick="bukaBorangSpeks()" style="cursor: pointer; transition: all 0.2s ease;">
                     <div style="display:flex; align-items:center; gap:10px;">
-                        <i class="fa-solid fa-box-open form-icon"></i>
+                        <i class="fa-solid fa-box-open form-icon text-primary"></i>
                         <div>
-                            <div>Permohonan Bantuan SPeKS 1/06 dan TSAPP 1/26</div>
-                            <div style="font-size:0.75rem; color:#64748b; font-weight:normal; margin-top:2px;">
-                                Permohonan sesi seterusnya akan dibuka tidak lama lagi.
+                            <div style="font-weight: 600;">Permohonan Bantuan SPeKS 1/06 dan TSAPP 1/26</div>
+                            <div style="font-size:0.75rem; color:#059669; font-weight:500; margin-top:2px;">
+                                Permohonan kini dibuka secara dalam talian.
                             </div>
                         </div>
                     </div>
-                    <span class="badge-soon">Akan Dibuka</span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="badge-active" style="background:#dcfce7; color:#15803d; font-size:0.75rem; font-weight:700; padding:4px 10px; border-radius:20px;">
+                            Dibuka
+                        </span>
+                        <i class="fa-solid fa-chevron-right text-muted" style="font-size:0.8rem;"></i>
+                    </div>
                 </div>
 
                 <div class="form-category-header"><i class="fa-solid fa-building fa-fw" style="margin-right:6px;"></i> Permit dan Lesen Premis Akuakultur</div>
@@ -5967,6 +5972,25 @@ function openHubSection(subId) {
 
 function backToHubMenu() {
   switchTab('tab-hub');
+}
+
+function bukaBorangSpeks() {
+    // 1. Dapatkan No. IC penternak yang sedang aktif
+    const userIc = (typeof currentUser !== 'undefined' && currentUser) 
+        ? (currentUser.ic_no || currentUser.ic || '') 
+        : '';
+
+    // 2. Tentukan pautan GitHub Pages eSPeKS anda
+    // (Boleh guna pautan penuh atau laluan relatif jika berada di domain sama)
+    const baseUrlEspeks = "https://[username].github.io/espeks/index.html"; 
+    // atau jika mahu terus ke borang: "https://[username].github.io/espeks/borang_speks.html"
+
+    const urlLengkap = userIc 
+        ? `${baseUrlEspeks}?ic=${encodeURIComponent(userIc)}` 
+        : baseUrlEspeks;
+
+    // 3. Buka portal eSPeKS di tab baharu
+    window.open(urlLengkap, '_blank');
 }
   </script>
 
