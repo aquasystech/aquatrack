@@ -3741,11 +3741,6 @@ window.google.script = {
         });
     }
 
-    // --- FUNGSI CUACA DINAMIK (DARI GOOGLE SHEET) ---
-    // Sila paste kod ini di dalam <script>, sebelum window.onload
-    
-    // --- FUNGSI CUACA (VERSI DEBUG: DENGAN ALERT) ---
-    // Letakkan ini di dalam <script>, sebelum window.onload
     const urlParams = new URLSearchParams(window.location.search);
     const serverData = {
       initialPage: urlParams.get('page') || (urlParams.get('token') ? 'page-reset-password' : ''),
@@ -3791,7 +3786,6 @@ window.google.script = {
           nav('page-main-app');
           switchTab('tab-dashboard'); 
           loadDashboardData();
-          initWeatherWidget();
           loadAlarms();
         } else {
           // Jika tiada sesi tersimpan, barulah paparkan halaman log masuk
@@ -3833,8 +3827,6 @@ window.google.script = {
           nav('page-main-app');
           switchTab('tab-dashboard'); 
           loadDashboardData();
-
-          initWeatherWidget();
 
         } else {
           Swal.fire('Log Masuk Gagal', res.message, 'error');
@@ -4694,10 +4686,6 @@ function handleForgotPassword() {
         }
     });
 }
-  
-document.addEventListener('DOMContentLoaded', function() {
-    initWeatherWidget();
-});
 
 function generateAITips(dataToAnalyze) {
     const tipTextEl = document.getElementById('ai-tip-text');
@@ -4828,34 +4816,6 @@ function applyFilters() {
     renderCrossTable(filtered);
     renderList(filtered);
     generateAITips(filtered);
-}
-
-// --- FUNGSI UPDATE WIDGET (VERSI KOMPAK) ---
-function updateWidget(iframe, titleElement, locationName, displayTxT) {
-    // 1. Update Tajuk Lokasi
-    if(titleElement) {
-        titleElement.innerHTML = `${displayTxT}`;
-    }
-
-    // 2. Hilangkan Loading Text
-    const loadingTxt = document.getElementById('weather-loading-text');
-    if(loadingTxt) loadingTxt.style.display = 'none';
-
-    // 3. URL Wttr.in yang diubahsuai untuk kotak kecil
-    const encodedLoc = locationName.replace(/ /g, "+");
-    
-    // Penjelasan URL Parameters:
-    // ?0 = Current weather only (Tiada ramalan esok)
-    // &Q = Quiet version (Kurang text)
-    // &n = Narrow version (Sesuai mobile/widget)
-    // &m = Metric (Celcius)
-    // &lang=ms = Bahasa Melayu
-    
-    // Kita guna format grafik standard wttr.in tapi CSS filter (invert) akan buat ia nampak sesuai dengan background biru gelap
-    const url = `https://wttr.in/${encodedLoc}?0&Q&n&m`; 
-
-    iframe.src = url;
-    iframe.style.display = 'block';
 }
 
 // --- FUNGSI PENGESAN PERANTI (CLIENT SIDE) ---
